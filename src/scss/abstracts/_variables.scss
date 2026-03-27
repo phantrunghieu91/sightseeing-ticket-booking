@@ -1,0 +1,30 @@
+@use 'functions' as *;
+
+$spacing: (
+  xs: to-rem(5),
+  sm: to-rem(10),
+  md: to-rem(15),
+  lg: to-rem(20),
+  xl: to-rem(30),
+  2xl: to-rem(40),
+  3xl: to-rem(50),
+  4xl: to-rem(60),
+  5xl: to-rem(70),
+  6xl: to-rem(80),
+);
+$font-sizes: (
+  xs: clamp(.75rem, 1cqi, .875rem),
+  sm: clamp(.875rem, 2cqi, .9375rem),
+  normal: clamp(.875rem, 2cqi, 1rem),
+  md: clamp(1.125rem, 3cqi, 1.25rem),
+  lg: clamp(1.25rem, 3cqi, 1.5rem),
+  xl: clamp(1.5rem, 4cqi, 2rem),
+  2xl: clamp(2rem, 4cqi, 2.5rem),
+  3xl: clamp(2.5rem, 4cqi, 3rem),
+);
+$breakpoints: (
+  xs: to-rem(430),
+  sm: to-rem(550),
+  md: to-rem(850),
+  lg: to-rem(1250)
+);

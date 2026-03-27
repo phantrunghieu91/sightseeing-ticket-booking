@@ -1,0 +1,190 @@
+@use '../bases/reset';
+@use '../components/gpw-button';
+
+:root {
+  // Colors
+  @each $i, $color in $gpwColors {
+    --gpw-color-#{$i}: #{$color};
+  }
+  @each $i, $color in $primaryColors {
+    --primary-color-#{$i}: #{$color};
+  }
+  @each $i, $color in $secondaryColors {
+    --secondary-color-#{$i}: #{$color};
+  }
+  @each $i, $color in $tertiaryColors {
+    --tertiary-color-#{$i}: #{$color};
+  }
+  @each $i, $color in $successColors {
+    --success-color-#{$i}: #{$color};
+  }
+  @each $i, $color in $dangerColors {
+    --danger-color-#{$i}: #{$color};
+  }
+  @each $i, $color in $grayColors {
+    --gray-color-#{$i}: #{$color};
+  }
+  // Screen size
+  @each $i, $screen in $breakpoints {
+    --screen-#{$i}: #{$screen};
+  }
+  // Spacing:
+  @each $i, $size in $spacing {
+    --spacing-#{$i}: #{$size};
+  }
+  // Font size
+  @each $i, $size in $font-sizes {
+    --fs-#{$i}: #{$size};
+  }
+  // Font family
+  --ff-base: "Be Vietnam Pro", sans-serif;
+  --ff-heading: var(--ff-base);
+
+  // text color
+  --base-color: var(--gray-color-950);
+  --heading-color: var(--primary-color-500);
+
+}
+html > body {
+  color: var(--base-color);
+  font-size: var(--fs-normal);
+  line-height: 1.5;
+
+  p {
+    margin-bottom: var(--spacing-xs);
+  }
+}
+
+#content {
+  container: content / inline-size;
+}
+
+.line-clamp {
+  --_font-size: var(--fs-normal);
+  --_line-height: 1.5;
+  --_line-clamp: 2;
+  --_fixed-height: true;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--_line-clamp);
+  overflow: hidden;
+  text-wrap: pretty;
+  font-size: var(--_font-size);
+  line-height: var(--_line-height);
+
+  @container style(--_fixed-height: true) {
+    height: calc(var(--_font-size) * var(--_line-height) * var(--_line-clamp));
+  }
+}
+
+.section__sub-title {
+  display: block;
+  color: var(--primary-color-500);
+  font-size: var(--fs-md);
+  font-weight: bold;
+
+  &--center {
+    text-align: center;
+  }
+
+  &--secondary {
+    color: var(--secondary-color-500);
+  }
+}
+
+.section__title {
+  font-size: var(--fs-xl);
+  line-height: 1.2;
+  color: var(--heading-color);
+  text-transform: capitalize;
+  margin-bottom: var(--spacing-lg);
+
+  &--center {
+    text-align: center;
+  }
+
+  &--secondary {
+    color: var(--secondary-color-500);
+
+    .highlight {
+      color: var(--primary-color-500);
+    }
+  }
+
+  .highlight {
+    color: var(--secondary-color-500);
+  }
+
+  &--has-separator {
+    --_separator-color: var(--secondary-color-500);
+    --_separator-width: 6.25rem;
+    --_separator-height: 0.1875rem;
+    position: relative;
+    padding-bottom: 1.25rem;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: var(--_separator-width);
+      height: var(--_separator-height);
+      background-color: var(--_separator-color);
+    }
+
+    &:is(.section__title--center):after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.section__description {
+  margin-bottom: var(--spacing-lg);
+
+  &--center {
+    text-align: center;
+  }
+}
+
+.gpw-video-block {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+
+.gpw-response-image,
+.gpw-response-image > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.section__inner {
+  --_section-inner-max-width: var(--screen-lg);
+  --_section-inner-padding-inline: var(--spacing-sm);
+
+  width: min(var(--_section-inner-max-width), calc(100% - var(--_section-inner-padding-inline) * 2));
+  margin-inline: auto;
+
+  &--full {
+    --_section-inner-max-width: 100%;
+    --_section-inner-padding-inline: 0rem;
+  }
+
+  &--has-inset-shadow {
+    --_box-shadow-clr: rgba(0, 0, 0, 0.25);
+
+    padding: clamp(var(--spacing-lg), 4cqi, var(--spacing-2xl)) clamp(var(--spacing-md), 3cqi, var(--spacing-xl));
+    box-shadow: inset 0 0 0.25rem var(--_box-shadow-clr);
+    border-radius: var(--_achievements-border-radius);
+    background-color: oklch(from var(--gray-color-50) l c h / 0.5);
+  }
+
+  @container ( width > 1250px ) {
+    &:not(&--full),
+    &--full {
+      --_section-inner-padding-inline: 0rem;
+    }
+  }
+}

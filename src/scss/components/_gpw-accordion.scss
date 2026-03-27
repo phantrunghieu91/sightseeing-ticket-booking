@@ -1,0 +1,69 @@
+.accordion {
+  $class: &;
+  --_item-padding-block: clamp(.5rem, 2cqi, 1rem);
+  --_item-padding-inline: clamp(1rem, 2cqi, 1.5rem);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--_space-between-items, 0);
+
+  &__item {
+    display: grid;
+    transition: grid-template-rows 300ms;
+
+    &:has([aria-hidden="true"]) {
+      grid-template-rows: min-content 0fr;
+    }
+
+    &:has([aria-hidden="false"]) {
+      --_accordion-btn-border-color: var(--primary-color-500);
+      --_accordion-btn-bg-clr: var(--gray-color-50);
+      
+      grid-template-rows: min-content 1fr;
+
+      #{$class}__button {
+        font-weight: 700;
+      }
+    }
+  }
+
+  &__button {
+    all: unset;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-top: .125rem solid var(--_accordion-btn-border-color, var(--gray-color-50));
+    padding-block: var(--_item-padding-block);
+    padding-inline: var(--_item-padding-inline);
+    background-color: var(--_accordion-btn-bg-clr, var(--tertiary-color-50));
+    color: var(--_accordion-btn-text-clr, var(--primary-color-500));
+    font-size: clamp(.875rem, 1.5cqi, 1rem);
+
+    transition: color 300ms, background-color 300ms;
+
+    &:hover {
+      --_accordion-btn-text-clr: var(--gray-color-500);
+    }
+  }
+
+  &__panel {
+    background-color: var(--_accordion-panel-bg-clr, var(--tertiary-color-50));
+    overflow: hidden;
+    padding-inline: var(--_item-padding-inline);
+    font-size: clamp(.875rem, 1.5cqi, 1rem);
+
+    transition: padding 200ms;
+    
+    &:is([aria-hidden="false"]) {
+      transition: padding-block 150ms;
+      padding-block: var(--_item-padding-inline);
+    }
+
+    p {
+      margin-bottom: .625rem;
+    }
+  }
+}

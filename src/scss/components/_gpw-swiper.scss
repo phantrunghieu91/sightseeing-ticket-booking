@@ -1,0 +1,74 @@
+@use '../abstracts/' as *;
+
+.gpw-nav-btn {
+  --_btn-size: 2.25rem;
+  --_space-from-edge: 1.25rem;
+  --_icon-size: 1.25rem;
+  --_icon-color: #000;
+  --_btn-bg-color: #fff;
+  --_btn-bg-opacity: .75;
+
+  width: var(--_btn-size);
+  height: var(--_btn-size);
+  display: grid;
+  place-items: center;
+
+  background-color: rgb( from var(--_btn-bg-color) r g b / var(--_btn-bg-opacity));
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+
+  transition: background-color 300ms;
+
+  .material-symbols-outlined {
+    font-size: var(--_icon-size);
+    color: var(--_icon-color);
+  }
+
+  &__next {
+    right: var(--_space-from-edge);
+  }
+
+  &__prev {
+    left: var(--_space-from-edge);
+  }
+
+  &:hover {
+    --_btn-bg-opacity: 1;
+  }
+
+  &:is(.swiper-button-disabled) {
+    display: none;
+  }
+}
+
+.gpw-pagination {
+  position: absolute;
+  z-index: 10;
+
+  &.swiper-pagination-bullets {
+    padding-block: .3125rem;
+
+    @include d-flex(row, center);
+
+    .swiper-pagination-bullet {
+      --swiper-pagination-bullet-inactive-color: #fff;
+      --swiper-pagination-bullet-inactive-opacity: .65;
+      --swiper-pagination-color: #fff;
+      --swiper-pagination-bullet-size: .5rem;
+      --swiper-pagination-bullet-border-radius: calc( var(--swiper-pagination-bullet-size) / 2 );
+      --swiper-pagination-bullet-horizontal-gap: .2rem;
+
+      transition: opacity 300ms, width 300ms;
+
+      &-active {
+        --swiper-pagination-bullet-width: calc( var(--swiper-pagination-bullet-size) * 2.5 );
+      }
+    }
+  }
+}
