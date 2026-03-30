@@ -12,4 +12,6 @@ get_template_part( 'gpw-templates/woocommerce/single-product/header-section' );
 
 get_template_part( 'gpw-templates/woocommerce/single-product/gallery-section' );
 
+get_template_part( 'gpw-templates/woocommerce/single-product/product-detail-section' );
+
 get_template_part( 'gpw-templates/global/footer' );

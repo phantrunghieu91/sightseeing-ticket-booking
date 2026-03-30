@@ -3,7 +3,10 @@
  * @author Hieu "Jin" Phan Trung
  * * Template: Single Product - Header
  */
+global $product;
 $address = get_field('address', get_the_ID());
+$displayData = get_field('display_data', get_the_ID());
+$reviewCount = $product->get_review_count();
 ?>
 <header class="product-header">
   <div class="section__inner">
@@ -13,15 +16,22 @@ $address = get_field('address', get_the_ID());
     <?php if (isset($address['text']) && !empty($address['text'])): ?>
       <div class="single-product__address">
         <span><?= esc_html($address['text']) ?></span>
-        <?php if (isset($address['google_map_link']) && !empty($address['google_map_link'])): ?>
-          <a href="<?= esc_url($address['google_map_link']) ?>" target="_blank">
-            <?php esc_html_e('Xem trên bản đồ', 'gpw') ?>
-          </a>
-        <?php endif; ?>
       </div>
     <?php endif; ?>
+    <ul class="product-header__meta-list">
+      <?php if( isset($displayData['review_point']) && !empty($displayData['review_point']) ) : ?>
+        <li class="product-header__meta-item">
+          <span><?= esc_html( $displayData['review_point'] ) ?>/10</span>
+        </li>
+      <?php endif; ?>
+      <?php if( $reviewCount > 0 ) : ?>
+        <li class="product-header__meta-item">
+          <span><?= esc_html( $reviewCount ) ?> <?php _e('reviews', 'gpw') ?></span>
+        </li>
+      <?php endif; ?>
+    </ul>
   </div>
 </header>
 <?php
 // ! Cleanup variables
-unset($address);
+unset($address, $displayData);
