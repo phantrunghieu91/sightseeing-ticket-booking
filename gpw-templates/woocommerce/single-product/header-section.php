@@ -20,12 +20,12 @@ $reviewCount = $product->get_review_count();
     <?php endif; ?>
     <ul class="product-header__meta-list">
       <?php if( isset($displayData['review_point']) && !empty($displayData['review_point']) ) : ?>
-        <li class="product-header__meta-item">
+        <li class="product-header__meta-item product-header__meta-item--review-point">
           <span><?= esc_html( $displayData['review_point'] ) ?>/10</span>
         </li>
       <?php endif; ?>
       <?php if( $reviewCount > 0 ) : ?>
-        <li class="product-header__meta-item">
+        <li class="product-header__meta-item product-header__meta-item--review-count">
           <span><?= esc_html( $reviewCount ) ?> <?php _e('reviews', 'gpw') ?></span>
         </li>
       <?php endif; ?>
