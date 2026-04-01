@@ -3,7 +3,6 @@
  * @author Hieu "Jin" Phan Trung
  * * Template: Single product - Product details section
  */
-dump(get_fields(get_the_ID()));
 $navItems = [
   [
     'id' => 'gpw-summary',
@@ -29,6 +28,17 @@ $navItems = [
 ?>
 <section class="product-details">
   <div class="section__inner">
+    <nav class="product-details__nav">
+      <ul class="product-details__nav-list">
+
+      <?php foreach( $navItems as $navItem ) : ?>
+
+        <li class="product-details__nav-item" aria-controls="<?= esc_attr( $navItem['id'] ) ?>"><?= esc_html( $navItem['label'] ) ?></li>
+
+      <?php endforeach ?>
+
+      </ul>
+    </nav>
     <main class="product-details__main">
 
       <?php foreach ( $navItems as $navItem ) {
