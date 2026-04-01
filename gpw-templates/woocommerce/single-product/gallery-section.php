@@ -11,7 +11,7 @@ if( !$product || is_a( $product, 'WP_Error' ) ) {
 $thumbnail_id = $product->get_image_id();
 $image_ids = $thumbnail_id ? array_merge( [ intval($thumbnail_id) ], $product->get_gallery_image_ids() ) : [];
 ?>
-<section class="product-gallery">
+<section class="gpw-gallery">
   <div class="section__inner">
     <div class="swiper">
       <div class="swiper-wrapper">
@@ -20,32 +20,32 @@ $image_ids = $thumbnail_id ? array_merge( [ intval($thumbnail_id) ], $product->g
         ?>
 
           <a href="<?= esc_url( $full_size_url) ?>" class="swiper-slide" data-fancybox="hotel-gallery">
-            <?= wp_get_attachment_image( $image_id, 'medium', false, [ 'class' => 'product-gallery__image', 'alt' => 'Hotel image' ]) ?>
+            <?= wp_get_attachment_image( $image_id, 'medium', false, [ 'class' => 'gpw-gallery__image', 'alt' => 'Hotel image' ]) ?>
           </a>
 
         <?php endforeach ?>
         <?php if( count( $image_ids ) > 7 ) : ?>
-          <div class="product-gallery__total-display">
+          <div class="gpw-gallery__total-display">
             <span>+<?= esc_html( count( $image_ids )) ?></span>
             <span class="material-symbols-outlined">image</span>
           </div>
         <?php endif; ?>
       </div>
-      <a href="javascript:void(0);" class="carousel-btn carousel-btn__prev" aria-label="Carousel previous slide" role="button">
+      <a class="gpw-nav-btn gpw-nav-btn__prev" role="button" aria-label="Previous slide">
         <span class="material-symbols-outlined">chevron_left</span>
       </a>
-      <a href="javascript:void(0);" class="carousel-btn carousel-btn__next" aria-label="Carousel next slide" role="button">
+      <a class="gpw-nav-btn gpw-nav-btn__next" role="button" aria-label="Next slide">
         <span class="material-symbols-outlined">chevron_right</span>
       </a>
-      <div class="swiper-pagination"></div>
+      <div class="gpw-pagination"></div>
     </div>
     <?php if( count($image_ids) > 7 ) : ?>
-      <div class="product-gallery__remain-imgs">
+      <div class="gpw-gallery__remain-imgs">
         <?php foreach( array_slice($image_ids, 7) as $img_id ) {
           $full_size_url = wp_get_attachment_image_url( $img_id, 'full' );  
           echo sprintf('<a href="%s" data-fancybox="hotel-gallery">%s</a>',
           esc_url( $full_size_url ),
-          wp_get_attachment_image( $img_id, 'medium', false, [ 'class' => 'product-gallery__remain-imgs--image', 'alt' => 'Hotel image' ] )
+          wp_get_attachment_image( $img_id, 'medium', false, [ 'class' => 'gpw-gallery__remain-imgs--image', 'alt' => 'Hotel image' ] )
           );
         } ?>
       </div>
