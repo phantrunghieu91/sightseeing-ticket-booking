@@ -10,11 +10,11 @@ $reviewCount = $product->get_review_count();
 ?>
 <header class="product-header">
   <div class="section__inner">
-    <h1 class="single-product__title">
+    <h1 class="product-header__title">
       <?= get_the_title() ?>
     </h1>
     <?php if (isset($address['text']) && !empty($address['text'])): ?>
-      <div class="single-product__address">
+      <div class="product-header__address">
         <span><?= esc_html($address['text']) ?></span>
       </div>
     <?php endif; ?>
