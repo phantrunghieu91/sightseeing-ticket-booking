@@ -51,6 +51,11 @@ class Register extends BaseController {
       $this->enqueueScript('swiper');
       $this->enqueueStyle('swiper');
     }
+
+    if( is_singular( 'product' ) ) {
+      $this->enqueueScript('gpw-product-single-page', time());
+      $this->enqueueStyle('gpw-product-single-page', time());
+    }
   }
   public function setTypeForModuleScripts() {
     if( empty( $this->module_scripts ) ) {
