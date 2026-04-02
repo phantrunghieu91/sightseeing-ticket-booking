@@ -11,5 +11,12 @@ if (!isset($highlights) || empty($highlights)) {
 $sectionID = isset($args['section_id']) ? $args['section_id'] : 'gpw-summary';
 ?>
 <div class="product-details__highlights" id="<?= esc_attr( $sectionID) ?>">
-  <?= wp_kses_post($highlights) ?>
+  <div class="product-details__highlights-content"><?= wp_kses_post($highlights) ?></div>
+  <a href="javascript:void(0);" class="product-details__highlights-toggle">
+    <span><?php _e('Xem thêm', 'gpw') ?></span>
+    <span class="material-symbols-outlined">chevron_right</span>
+  </a>
 </div>
+<?php 
+// ! Cleanup variables
+unset($highlights, $sectionID);

@@ -47,10 +47,15 @@ class Register extends BaseController {
     $this->enqueueStyle('gpw-footer', time());
 
     // * Enqueue swiper for page that needs it
-    if( is_front_page() ) {
+    if( is_front_page() || is_singular( 'product' ) ) {
       $this->enqueueScript('swiper');
       $this->enqueueStyle('swiper');
     }
+
+    if( is_singular( 'product' ) ) {
+      $this->enqueueScript('fancybox', null);
+      $this->enqueueStyle('fancybox', null);
+    } 
 
     if( is_singular( 'product' ) ) {
       $this->enqueueScript('gpw-product-single-page', time());
