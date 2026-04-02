@@ -67,4 +67,30 @@ document.addEventListener('DOMContentLoaded', function() {
       observer.observe(document.querySelector('.gpw-gallery'));
     },
   }.init();
+
+  // highlights controller
+  const highlightsSection = {
+    init() {
+      try {
+        this.cacheElements();
+        this.bindEvents();
+      } catch( error ) {
+        console.warn('HIGHLIGHTS TOGGLE ERROR: ', error);
+      }
+    },
+    cacheElements() {
+      this.highlightsSectionEl = document.querySelector('.product-details__highlights');
+      if ( !this.highlightsSectionEl ) {
+        throw new Error('No highlights section found');
+      }
+      this.toggleBtn = this.highlightsSectionEl.querySelector('.product-details__highlights-toggle');
+    },
+    bindEvents() {
+      this.toggleBtn.addEventListener('click', this.handleToggle.bind(this));
+    },
+    handleToggle() {
+      const isExpanded = this.toggleBtn.getAttribute('aria-expanded') === 'true';
+      this.toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+    }
+  }.init();
 });
