@@ -12,8 +12,8 @@ $sectionID = isset($args['section_id']) ? $args['section_id'] : 'gpw-summary';
 ?>
 <div class="product-details__highlights" id="<?= esc_attr( $sectionID) ?>">
   <div class="product-details__highlights-content"><?= wp_kses_post($highlights) ?></div>
-  <a href="javascript:void(0);" class="product-details__highlights-toggle">
-    <span><?php _e('Xem thêm', 'gpw') ?></span>
+  <a href="javascript:void(0);" class="product-details__highlights-toggle" data-expanded-text="<?php _e('Xem thêm', 'gpw') ?>"
+    data-collapsed-text="<?php _e('Thu gọn', 'gpw') ?>" aria-expanded="false" aria-controls="<?= esc_attr( $sectionID ) ?>">
     <span class="material-symbols-outlined">chevron_right</span>
   </a>
 </div>
