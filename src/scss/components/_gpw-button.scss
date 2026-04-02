@@ -16,20 +16,20 @@
   --_gpw-button-hover-border-color: transparent;
 
   padding: var(--_gpw-button-padding-block) var(--_gpw-button-padding-inline);
-  width: fit-content;
+  width: var(--_gpw-button-width, fit-content);
   min-height: unset;
   margin: 0;
   display: block;
 
   background-color: var(--_gpw-button-background-color);
   color: var(--_gpw-button-text-color);
-  border: 0.0625rem solid var(--_gpw-button-border-color);
+  border: var(--_gpw-button-border-width, .0625rem) solid var(--_gpw-button-border-color);
   border-radius: var(--_gpw-button-border-radius, .3125rem);
   font-size: var(--_gpw-button-font-size);
   font-weight: var(--_gpw-button-font-weight);
   line-height: var(--_gpw-button-line-height);
+  text-transform: var(--_gpw-button-text-transform, uppercase);
   text-decoration: none;
-  text-transform: uppercase;
 
   transition-duration: 200ms;
   transition-property: background-color, color, border-color;
@@ -108,6 +108,11 @@
   }
 
   &--full-width {
-    width: 100%;
+    --_gpw-button-width: 100%;
+    text-align: center;
+
+    &:has(.material-symbols-outlined) {
+      justify-content: center;
+    }
   }
 }

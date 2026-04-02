@@ -16,22 +16,26 @@ $buttonStyle = $args['style'] ?? '';
 $buttonTarget = $args['target'] ?? '_self';
 $buttonIconCode = $args['icon_code'] ?? '';
 $buttonIconPosition = $args['icon_position'] ?? 'right'; // left | right
+$buttonWidth = isset($args['width']) ? $args['width'] : ''; // full | fit-content (default)
 if (!$buttonLabel) {
   return;
 }
 $buttonClasses = isset($args['class']) && !empty($args['class']) ? [$args['class']] : [];
 $buttonClasses[] = 'gpw-button';
+if( $buttonWidth === 'full' || $buttonWidth === 'full-width' ) {
+  $buttonClasses[] = 'gpw-button--full-width';
+}
 $buttonClasses[] = match ($buttonPosition) {
   'center' => 'gpw-button--center',
   'right' => 'gpw-button--right',
   default => '',
 };
-match ($buttonStyle) {
-  'primary' => $buttonClasses[] = 'gpw-button__primary',
-  'secondary' => $buttonClasses[] = 'gpw-button__secondary',
-  'white-primary' => $buttonClasses[] = 'gpw-button__white-primary',
-  'outline' => $buttonClasses[] = 'gpw-button__outlined',
-  default => $buttonClasses[] = '',
+$buttonClasses[] = match ($buttonStyle) {
+  'primary' => 'gpw-button__primary',
+  'secondary' => 'gpw-button__secondary',
+  'white-primary' => 'gpw-button__white-primary',
+  'outline' => 'gpw-button__outlined',
+  default => '',
 };
 
 $renderButtonText = function ($isHover = false) use ($buttonLabel, $buttonIconCode, $buttonIconPosition) {
