@@ -35,7 +35,7 @@ $buttonClasses[] = match ($buttonStyle) {
   'secondary' => 'gpw-button__secondary',
   'white-primary' => 'gpw-button__white-primary',
   'outline' => 'gpw-button__outlined',
-  default => '',
+  default => 'gpw-button__primary',
 };
 
 $renderButtonText = function ($isHover = false) use ($buttonLabel, $buttonIconCode, $buttonIconPosition) {
