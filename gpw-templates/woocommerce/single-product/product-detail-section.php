@@ -28,7 +28,7 @@ $navItems = [
 ?>
 <section class="product-details">
   <div class="section__inner">
-    <nav class="product-details__nav">
+    <nav class="product-details__nav product-details__nav--hidden" aria-label="<?= __('Điều hướng chi tiết sản phẩm', 'gpw') ?>">
       <ul class="product-details__nav-list">
 
       <?php foreach( $navItems as $navItem ) : ?>
