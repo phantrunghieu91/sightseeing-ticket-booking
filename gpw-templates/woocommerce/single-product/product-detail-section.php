@@ -31,9 +31,9 @@ $navItems = [
     <nav class="product-details__nav product-details__nav--hidden" aria-label="<?= __('Điều hướng chi tiết sản phẩm', 'gpw') ?>">
       <ul class="product-details__nav-list">
 
-      <?php foreach( $navItems as $navItem ) : ?>
+      <?php foreach( $navItems as $idx => $navItem ) : ?>
 
-        <li class="product-details__nav-item" aria-controls="<?= esc_attr( $navItem['id'] ) ?>"><?= esc_html( $navItem['label'] ) ?></li>
+        <li class="product-details__nav-item<?= $idx === 0 ? ' product-details__nav-item--active' : '' ?>" aria-controls="<?= esc_attr( $navItem['id'] ) ?>"><?= esc_html( $navItem['label'] ) ?></li>
 
       <?php endforeach ?>
 
