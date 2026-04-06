@@ -16,6 +16,7 @@ class ThemeInit {
       base\Register::class,
       base\Utilities::class,
       controller\CompanyInfo::class,
+      woocommerce\BookingController::class,
     ];
   }
 

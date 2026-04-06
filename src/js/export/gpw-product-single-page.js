@@ -242,6 +242,103 @@ document.addEventListener('DOMContentLoaded', function () {
     },
   }.init();
 
+  // Form controller
+  const formController = {
+    init() {
+      try {
+        this.cacheElements();
+        this.bindEvents();
+      } catch(error) {
+        console.warn('FORM CONTROLLER ERROR: ', error);
+      }
+    },
+    cacheElements() {
+      this.formEl = document.querySelector('.product-form__form');
+      if (!this.formEl) {
+        throw new Error('No product form found');
+      }
+      this.submitBtn = this.formEl.querySelector('.gpw-button');
+      this.quantityInput = this.formEl.querySelector('.product-form__control--quantity');
+      this.decreaseBtn = this.formEl.querySelector('.product-form__quantity-btn--decrease');
+      this.increaseBtn = this.formEl.querySelector('.product-form__quantity-btn--increase');
+    },
+    bindEvents() {
+      this.decreaseBtn.addEventListener('click', this.handleChangeQuantity.bind(this, 'decrease'));
+      this.increaseBtn.addEventListener('click', this.handleChangeQuantity.bind(this, 'increase'));
+      this.formEl.addEventListener('submit', this.handleSubmit.bind(this));
+    },
+    handleChangeQuantity( action = 'increase' ) {
+      const currentValue = parseInt(this.quantityInput.value) || 1;
+      if( action === 'decrease' && currentValue <= 1 ) {
+        return;
+      }
+      const newValue = action === 'increase' ? currentValue + 1 : currentValue - 1;
+      this.quantityInput.value = newValue;
+    },
+    async handleSubmit( event ) {
+      event.preventDefault();
+      const oldBtnContent = this.submitBtn.innerHTML;
+      this.setLoadingState(this.submitBtn);
+      this.setLoadingState();
+      const formData = new FormData(this.formEl);
+      formData.append('action', ajaxObj.action);
+      formData.append('nonce', ajaxObj.nonce);
+      console.table(Object.fromEntries(formData.entries()));
+      try {
+        const response = await fetch( ajaxObj.url, {
+          method: 'POST',
+          body: formData,
+        });
+        const resData = await response.json();
+        if( !response.ok || !resData.success ) {
+          throw new Error(resData.data?.message || 'Failed to submit the form');
+        }
+        console.log(resData);
+        await this.refreshCart();
+      } catch( error ) {
+        console.error('Error submitting the form: ', error);
+      } finally {
+        this.removeLoadingState(oldBtnContent);
+      }
+    },
+    setLoadingState() {
+      const loadingEl = document.createElement('span');
+      loadingEl.classList.add('material-symbols-outlined');
+      loadingEl.textContent = 'progress_activity';
+      this.submitBtn.classList.add('loading');
+      this.submitBtn.disabled = true;
+      this.submitBtn.textContent = '';
+      this.submitBtn.appendChild(loadingEl);
+    },
+    removeLoadingState(oldContent) {
+      this.submitBtn.classList.remove('loading');
+      this.submitBtn.disabled = false;
+      this.submitBtn.innerHTML = oldContent;
+    },
+    async refreshCart( ) {
+      try {
+        const response = await fetch('/?wc-ajax=get_refreshed_fragments', { method: 'POST' });
+        const data = await response.json();
+        if (data.fragments) {
+          for (let key in data.fragments) {
+            let element = document.querySelector(key);
+            if (element) {
+              if (element.classList.contains('cart-icon')) {
+                const parent = element.parentElement;
+                element.remove();
+                parent.innerHTML = data.fragments[key];
+              } else {
+                element.innerHTML = data.fragments[key];
+              }
+            }
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }.init();
+
   // related products section
   const relatedProductsSection = {
     init() {
