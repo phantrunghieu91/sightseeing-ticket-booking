@@ -15,7 +15,6 @@ class CartAndCheckoutController {
   public function register() {
     add_filter( 'woocommerce_get_item_data', [$this, 'displayAdditionalDataInCartAndCheckoutPage'], 10, 2 );
     add_action('woocommerce_checkout_create_order_line_item', [$this,'addAdditionalDataToOrder'], 10, 4);
-    add_action('woocommerce_order_item_meta_start', [$this, 'displayAdditionalDataInOrder'], 10, 4);
     add_filter('woocommerce_order_item_get_formatted_meta_data', [$this, 'removeOrderItemMetaOnThankYouPage'], 10, 2);
   }
   public function displayAdditionalDataInCartAndCheckoutPage( $itemData, $cartItem ) {
@@ -34,19 +33,8 @@ class CartAndCheckoutController {
   }
   public function addAdditionalDataToOrder( $item, $cartItemKey, $values, $order ) {
     if( isset( $values['booking_date'] ) && !empty( $values['booking_date'] ) ) {
-      $item->add_meta_data( 'booking_date', $values['booking_date'] );
+      $item->add_meta_data( __('Ngày đặt', 'gpw'), $values['booking_date'] );
     }
-  }
-  public function displayAdditionalDataInOrder( $itemId, $item, $order, $plainText ) {
-    $bookingDate = $item->get_meta( 'booking_date' );
-    if( ! $bookingDate ) {
-      return;
-    }
-    $bookingDateObj = \DateTime::createFromFormat('Y-m-d', $bookingDate);
-    if( ! $bookingDateObj ) {
-      return;
-    }
-    echo sprintf( '<p><strong>%s:</strong> %s</p>', __('Ngày đặt', 'gpw'), $bookingDateObj->format('d/m/Y') );
   }
   public function removeOrderItemMetaOnThankYouPage( $formattedMeta, $item ) {
     if( is_wc_endpoint_url( 'order-received' ) ) {
