@@ -29,8 +29,6 @@ $tags = get_the_terms( get_the_ID(), 'product_tag' );
       } ?>
     </div>
     <form method="POST" class="product-form__form">
-      <input type="hidden" name="action" value="<?= esc_attr($formAction) ?>">
-      <?php wp_nonce_field( $formAction, $formAction . '_nonce' ) ?>
       <input type="hidden" name="product_id" value="<?= esc_attr( $product->get_id() ) ?>">
       <div class="product-form__control-wrapper">
         <label for="booking-date"><?= __('Chọn ngày', 'gpw') ?></label>

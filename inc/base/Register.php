@@ -58,8 +58,15 @@ class Register extends BaseController {
     } 
 
     if( is_singular( 'product' ) ) {
+      $bookingCtrl = \gpweb\inc\woocommerce\BookingController::getInstance();
+      $action = $bookingCtrl->getAction();
       $this->enqueueScript('gpw-product-single-page', time());
       $this->enqueueStyle('gpw-product-single-page', time());
+      wp_localize_script( 'gpw-product-single-page', 'ajaxObj', [
+        'url' => admin_url( 'admin-ajax.php' ),
+        'action' => $action,
+        'nonce' => wp_create_nonce( "{$action}_nonce" ),
+      ]);
     }
   }
   public function setTypeForModuleScripts() {
