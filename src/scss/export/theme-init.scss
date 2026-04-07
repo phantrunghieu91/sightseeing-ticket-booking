@@ -45,10 +45,16 @@
   --heading-color: var(--primary-color-500);
 
 }
-html > body {
-  color: var(--base-color);
-  font-size: var(--fs-normal);
-  line-height: 1.5;
+html {
+  &.no-scroll {
+    overflow: hidden;
+  }
+
+  & > body {
+    color: var(--base-color);
+    font-size: var(--fs-normal);
+    line-height: 1.5;
+  }
 
   p {
     margin-bottom: var(--spacing-xs);
