@@ -257,7 +257,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!this.formEl) {
         throw new Error('No product form found');
       }
-      this.submitBtn = this.formEl.querySelector('.gpw-button');
+      this.addToCartBtn = this.formEl.querySelector('.product-form__add-to-cart-btn');
+      this.buyNowBtn = this.formEl.querySelector('.product-form__buy-now-btn');
       this.quantityInput = this.formEl.querySelector('.product-form__control--quantity');
       this.decreaseBtn = this.formEl.querySelector('.product-form__quantity-btn--decrease');
       this.increaseBtn = this.formEl.querySelector('.product-form__quantity-btn--increase');
@@ -265,7 +266,8 @@ document.addEventListener('DOMContentLoaded', function () {
     bindEvents() {
       this.decreaseBtn.addEventListener('click', this.handleChangeQuantity.bind(this, 'decrease'));
       this.increaseBtn.addEventListener('click', this.handleChangeQuantity.bind(this, 'increase'));
-      this.formEl.addEventListener('submit', this.handleSubmit.bind(this));
+      this.addToCartBtn.addEventListener('click', (event) => this.handleSubmit(event, 'add_to_cart'));
+      this.buyNowBtn.addEventListener('click', (event) => this.handleSubmit(event, 'buy_now'));
     },
     handleChangeQuantity( action = 'increase' ) {
       const currentValue = parseInt(this.quantityInput.value) || 1;
@@ -275,15 +277,19 @@ document.addEventListener('DOMContentLoaded', function () {
       const newValue = action === 'increase' ? currentValue + 1 : currentValue - 1;
       this.quantityInput.value = newValue;
     },
-    async handleSubmit( event ) {
+    async handleSubmit( event, action = 'add_to_cart' ) {
       event.preventDefault();
-      const oldBtnContent = this.submitBtn.innerHTML;
-      this.setLoadingState(this.submitBtn);
-      this.setLoadingState();
+      const button = action === 'add_to_cart' ? this.addToCartBtn : this.buyNowBtn;
+      const oldBtnContent =  button.innerHTML;
+      this.setLoadingState(button);
       const formData = new FormData(this.formEl);
-      formData.append('action', ajaxObj.action);
+      formData.append('action', action === 'add_to_cart' ? ajaxObj.add_to_cart_action : ajaxObj.buy_now_action);
       formData.append('nonce', ajaxObj.nonce);
-      console.table(Object.fromEntries(formData.entries()));
+      if( !this.validateInput( 'date', formData.get('booking-date') ) ) {
+        alert('Chọn ngày trước khi submit form!');
+        this.removeLoadingState(oldBtnContent, button);
+        return;
+      }
       try {
         const response = await fetch( ajaxObj.url, {
           method: 'POST',
@@ -295,25 +301,35 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         console.log(resData);
         await this.refreshCart();
+        if( action === 'buy_now' && resData.data?.redirect_url ) {
+          window.location.href = resData.data.redirect_url;
+        }
       } catch( error ) {
         console.error('Error submitting the form: ', error);
       } finally {
-        this.removeLoadingState(oldBtnContent);
+        this.removeLoadingState(oldBtnContent, button);
       }
     },
-    setLoadingState() {
+    validateInput( type = 'date', value ) {
+      if (type === 'date') {
+        const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+        return datePattern.test(value);
+      }
+      return false;
+    },
+    setLoadingState(button) {
       const loadingEl = document.createElement('span');
       loadingEl.classList.add('material-symbols-outlined');
       loadingEl.textContent = 'progress_activity';
-      this.submitBtn.classList.add('loading');
-      this.submitBtn.disabled = true;
-      this.submitBtn.textContent = '';
-      this.submitBtn.appendChild(loadingEl);
+      button.classList.add('loading');
+      button.disabled = true;
+      button.textContent = '';
+      button.appendChild(loadingEl);
     },
-    removeLoadingState(oldContent) {
-      this.submitBtn.classList.remove('loading');
-      this.submitBtn.disabled = false;
-      this.submitBtn.innerHTML = oldContent;
+    removeLoadingState(oldContent, button) {
+      button.classList.remove('loading');
+      button.disabled = false;
+      button.innerHTML = oldContent;
     },
     async refreshCart( ) {
       try {

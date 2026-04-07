@@ -6,7 +6,8 @@
 namespace gpweb\inc\woocommerce;
 class BookingController {
   private static $instance = null;
-  private string $action = 'gpw_add_to_cart';
+  private string $addToCartAction = 'gpw_add_to_cart';
+  private string $buyNowAction = 'gpw_buy_now';
   public static function getInstance() {
     if( self::$instance === null ) {
       self::$instance = new BookingController();
@@ -14,14 +15,17 @@ class BookingController {
     return self::$instance;
   }
   public function register() {
-    add_action("wp_ajax_{$this->action}", [$this, 'handleAddToCart']);
-    add_action("wp_ajax_nopriv_{$this->action}", [$this, 'handleAddToCart']);
+    add_action("wp_ajax_{$this->addToCartAction}", [$this, 'handleBooking']);
+    add_action("wp_ajax_nopriv_{$this->addToCartAction}", [$this, 'handleBooking']);
+    add_action("wp_ajax_{$this->buyNowAction}", [$this, 'handleBooking']);
+    add_action("wp_ajax_nopriv_{$this->buyNowAction}", [$this, 'handleBooking']);
   } 
-  public function handleAddToCart() {
-    if( !check_ajax_referer( "{$this->action}_nonce", 'nonce', false ) ) {
+  public function handleBooking() {
+    if( !check_ajax_referer( "{$this->addToCartAction}_nonce", 'nonce', false ) ) {
       wp_send_json_error( ['message' => __('Có lỗi xảy ra trong quá trình xác thực, vui lòng thử lại sau!', 'gpw')] );
       wp_die();
     }
+    $requestAction = isset($_POST['action']) ? sanitize_text_field($_POST['action']) : '';
     $productId = isset($_POST['product_id']) ? intval($_POST['product_id']) : 0;
     $bookingDate = isset($_POST['booking-date']) ? $_POST['booking-date'] : '';
     $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
@@ -50,10 +54,18 @@ class BookingController {
       wp_send_json_error( ['message' => __('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng, vui lòng thử lại sau!', 'gpw')] );
       wp_die();
     }
-    wp_send_json_success( ['message' => __('Thêm sản phẩm vào giỏ hàng thành công!', 'gpw')] );
-    wp_die();
+    if( $requestAction === $this->buyNowAction ) {
+      wp_send_json_success( ['redirect_url' => wc_get_checkout_url()] );
+      wp_die();
+    } else {
+      wp_send_json_success( ['message' => __('Thêm sản phẩm vào giỏ hàng thành công!', 'gpw')] );
+      wp_die();
+    }
   }
-  public function getAction() {
-    return $this->action;
+  public function getAddToCartAction() {
+    return $this->addToCartAction;
+  }
+  public function getBuyNowAction() {
+    return $this->buyNowAction;
   }
 }

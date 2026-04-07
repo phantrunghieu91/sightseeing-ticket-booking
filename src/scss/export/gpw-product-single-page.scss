@@ -257,11 +257,12 @@ body.admin-bar {
     &__form {
       margin: 0;
       display: grid;
-      grid-template-columns: minmax(0, 1fr);
+      grid-template-columns: repeat(2, min-content);
       gap: var(--spacing-sm);
 
       .gpw-button {
         align-self: end;
+        white-space: nowrap;
       }
     }
 
@@ -311,6 +312,13 @@ body.admin-bar {
         padding-inline: .75rem 0;
         text-align: center;
       }
+    }
+
+    &__more-info-toggle {
+      grid-column: 1 / -1;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
     }
 
     .gpw-button.loading .material-symbols-outlined {
@@ -381,7 +389,8 @@ body.admin-bar {
   @include container-query(content, sm, gt) {
     .product-form {
       &__form {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) min-content;
+        grid-template-columns: repeat(4, min-content);
+        gap: .9375rem;
       }
     }
   }

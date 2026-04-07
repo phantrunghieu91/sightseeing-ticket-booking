@@ -59,13 +59,15 @@ class Register extends BaseController {
 
     if( is_singular( 'product' ) ) {
       $bookingCtrl = \gpweb\inc\woocommerce\BookingController::getInstance();
-      $action = $bookingCtrl->getAction();
+      $addToCartAction = $bookingCtrl->getAddToCartAction();
+      $buyNowAction = $bookingCtrl->getBuyNowAction();
       $this->enqueueScript('gpw-product-single-page', time());
       $this->enqueueStyle('gpw-product-single-page', time());
       wp_localize_script( 'gpw-product-single-page', 'ajaxObj', [
         'url' => admin_url( 'admin-ajax.php' ),
-        'action' => $action,
-        'nonce' => wp_create_nonce( "{$action}_nonce" ),
+        'add_to_cart_action' => $addToCartAction,
+        'buy_now_action' => $buyNowAction,
+        'nonce' => wp_create_nonce( "{$addToCartAction}_nonce" ),
       ]);
     }
   }

@@ -44,7 +44,12 @@ $tags = get_the_terms( get_the_ID(), 'product_tag' );
           <span class="material-symbols-outlined">add</span>
         </button>
       </div>
-      <?php get_template_part( 'gpw-templates/global/gpw-button', null, [ 'label' => __('Chọn', 'gpw'), 'tag' => 'button', 'type' => 'submit' ] ) ?>
+      <?php get_template_part( 'gpw-templates/global/gpw-button', null, [ 'label' => __('Thêm vào giỏ hàng', 'gpw'), 'style' => 'secondary', 'tag' => 'button', 'type' => 'submit', 'class' => 'product-form__add-to-cart-btn' ] ) ?>
+      <?php get_template_part( 'gpw-templates/global/gpw-button', null, [ 'label' => __('Mua ngay', 'gpw'), 'tag' => 'button', 'type' => 'submit', 'class' => 'product-form__buy-now-btn' ] ) ?>
+      <a href="javascript:void(0);" class="product-form__more-info-toggle">
+        <span><?= __('Thông tin gói dịch vụ', 'gpw') ?></span>
+        <span class="material-symbols-outlined">chevron_right</span>
+      </a>
     </form>
   </div>
 </div>
