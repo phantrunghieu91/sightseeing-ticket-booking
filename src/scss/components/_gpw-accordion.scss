@@ -35,7 +35,7 @@
     justify-content: space-between;
     align-items: center;
 
-    border-top: .125rem solid var(--_accordion-btn-border-color, var(--gray-color-50));
+    border-top: var(--_accordion-btn-border-width, .125rem) solid var(--_accordion-btn-border-clr, var(--gray-color-50));
     padding-block: var(--_item-padding-block);
     padding-inline: var(--_item-padding-inline);
     background-color: var(--_accordion-btn-bg-clr, var(--tertiary-color-50));
@@ -45,7 +45,7 @@
     transition: color 300ms, background-color 300ms;
 
     &:hover {
-      --_accordion-btn-text-clr: var(--gray-color-500);
+      color: var(--_accordion-btn-hover-text-clr, var(--gray-color-500));
     }
   }
 
@@ -60,6 +60,10 @@
     &:is([aria-hidden="false"]) {
       transition: padding-block 150ms;
       padding-block: var(--_item-padding-inline);
+    }
+
+    ul {
+      margin-left: 1.25rem;
     }
 
     p {
