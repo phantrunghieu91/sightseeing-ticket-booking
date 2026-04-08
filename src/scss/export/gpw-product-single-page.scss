@@ -1,5 +1,6 @@
 @use '../abstracts/' as *;
 @use '../components/gpw-swiper';
+@use '../components/gpw-accordion';
 body.admin-bar {
   --admin-bar-height: 2rem;
 }
@@ -134,6 +135,7 @@ body.admin-bar {
   }
 
   &__nav {
+    --admin-bar-height: 0px;
     position: fixed;
     top: calc(var(--header-height, 4.375rem) + var(--admin-bar-height, 0px));
     left: 0;
@@ -319,6 +321,120 @@ body.admin-bar {
       display: inline-flex;
       align-items: center;
       gap: .5rem;
+      margin: 0;
+      padding: 0;
+      min-height: auto;
+      line-height: auto;
+      height: auto;
+      text-transform: none;
+      font-weight: 400;
+      
+      span:not(.material-symbols-outlined) {
+        text-decoration: underline;
+      }
+    }
+
+    .more-info-popover {
+      --_popover-padding-inline: 1.25rem;
+      --_popover-padding-block: 1.25rem 1.875rem;
+      --_tag-icon-size: 1.875rem;
+      top: 0;
+      right: 0;
+      margin-block: 0;
+      margin-inline: auto 0;
+      padding: 0;
+      width: min( 62.5rem, 100% );
+      height: 100svh;
+      border: none;
+      overflow: hidden;
+
+      &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-inline: var(--_popover-padding-inline);
+        padding-block: var(--_popover-padding-block);
+        border-bottom: .0625rem solid var(--_border-color);
+      }
+
+      &__close-btn {
+        margin: 0;
+        padding: 0;
+        min-height: auto;
+        height: auto;
+        font-size: 1rem;
+        line-height: 1;
+      }
+
+      &__main {
+        padding: var(--_popover-padding-block) var(--_popover-padding-inline);
+        height: calc( 100% - var(--_popover-header-height, 4.375rem) );
+        overflow: hidden auto;
+      }
+
+      &__tags {
+        list-style: none;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: .625rem;
+      }
+
+      &__tag {
+        margin: 0;
+        display: grid;
+        grid-template-columns: var(--_tag-icon-size) minmax(0, 1fr);
+        gap: .5rem;
+
+        &-icon {
+          grid-column: 1 / 2;
+          grid-row: 1 /3;
+          width: var(--_tag-icon-size, 1.875rem );
+          aspect-ratio: 1;
+          object-fit: cover;
+        }
+
+        &-description {
+          font-size: var(--fs-sm);
+          color: var(--gray-color-500);
+        }
+      }
+
+      &__tags, &__info, &__general-terms {
+        margin-bottom: 1.875rem;
+      }
+
+      &__info {
+        &-content {
+          padding: .9375rem;
+          border-radius: var(--_border-radius);
+          border: .0625rem solid var(--_border-color);
+
+          ul {
+            margin-left: 1.25rem;
+          }
+        }
+      }
+
+      .accordion {
+        --_accordion-panel-bg-clr: transparent;
+        --_accordion-btn-bg-clr: transparent;
+        --_accordion-btn-active-bg-clr: transparent;
+        --_accordion-btn-hover-text-clr: var(--primary-color-700);
+        --_accordion-btn-active-border-clr: var(--_border-color);
+        --_accordion-btn-border-clr: var(--_border-color);
+        --_accordion-btn-border-width: .0625rem;
+        overflow: hidden;
+        border-radius: var(--_border-radius);
+        border: .0625rem solid var(--_border-color);
+
+        &__item:first-child .accordion__button {
+          border-top: none;
+        }
+      }
+
+      &::backdrop {
+        background-color: hsl(from var(--gray-color-950) h s l / .75 );
+      }
     }
 
     .gpw-button.loading .material-symbols-outlined {
@@ -396,6 +512,9 @@ body.admin-bar {
   }
 
   @include container-query(content, md, gt) {
+    &__nav {
+      --admin-bar-height: 2rem;
+    }
     .section__inner {
       grid-template-columns: minmax(0, 1fr) 20rem;
     }

@@ -1,3 +1,4 @@
+import GPWAccordion from '../components/gpw-accordion';
 document.addEventListener('DOMContentLoaded', function () {
   const throttle = (func, delay) => {
     let isThrottled = false;
@@ -394,4 +395,33 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     },
   }.init();
+
+  // more information popover
+  const moreInfoPopover = {
+    init() {
+      try {
+        this.cacheElements();
+        this.bindEvents();
+      } catch( error ) {
+        console.warn('MORE INFO POPOVER ERROR: ', error);
+      }
+    },
+    cacheElements() {
+      this.popoverEl = document.getElementById('more-info-popover');
+      if( !this.popoverEl ) {
+        throw new Error('No more information popover element found');
+      }
+      this.toggleBtn = document.querySelector('.product-form__more-info-toggle');
+      this.closePopoverBtn = this.popoverEl.querySelector('.more-info-popover__close-btn');
+    },
+    bindEvents() {
+      this.toggleBtn.addEventListener('click', this.handleTogglePopover.bind(this, 'show'));
+      this.closePopoverBtn.addEventListener('click', this.handleTogglePopover.bind(this, 'hide'));
+    },
+    handleTogglePopover( action = 'show' ) {
+      this.popoverEl.togglePopover( action === 'show' );
+      document.documentElement.classList.toggle('no-scroll', action === 'show');
+    }
+  }.init();
+  new GPWAccordion();
 });
