@@ -45,10 +45,16 @@
   --heading-color: var(--primary-color-500);
 
 }
-html > body {
-  color: var(--base-color);
-  font-size: var(--fs-normal);
-  line-height: 1.5;
+html {
+  &.no-scroll {
+    overflow: hidden;
+  }
+
+  & > body {
+    color: var(--base-color);
+    font-size: var(--fs-normal);
+    line-height: 1.5;
+  }
 
   p {
     margin-bottom: var(--spacing-xs);
@@ -96,8 +102,12 @@ html > body {
   font-size: var(--fs-xl);
   line-height: 1.2;
   color: var(--heading-color);
-  text-transform: capitalize;
+  text-transform: var(--_text-transform, none);
   margin-bottom: var(--spacing-lg);
+
+  &:is(h3) {
+    font-size: var(--fs-lg);
+  }
 
   &--center {
     text-align: center;
@@ -135,6 +145,21 @@ html > body {
     &:is(.section__title--center):after {
       left: 50%;
       transform: translateX(-50%);
+    }
+  }
+
+  &--dot-front {
+    display: inline-flex;
+    align-items: center;
+    gap: .625rem;
+
+    &::before {
+      content: '';
+      display: block;
+      height: var(--_dot-height, .875em);
+      width: var(--_dot-width, .3125em);
+      background-color: var(--_dot-color, var(--primary-color-500));
+      transform: skew(-10deg);
     }
   }
 }

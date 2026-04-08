@@ -47,9 +47,28 @@ class Register extends BaseController {
     $this->enqueueStyle('gpw-footer', time());
 
     // * Enqueue swiper for page that needs it
-    if( is_front_page() ) {
+    if( is_front_page() || is_singular( 'product' ) ) {
       $this->enqueueScript('swiper');
       $this->enqueueStyle('swiper');
+    }
+
+    if( is_singular( 'product' ) ) {
+      $this->enqueueScript('fancybox', null);
+      $this->enqueueStyle('fancybox', null);
+    } 
+
+    if( is_singular( 'product' ) ) {
+      $bookingCtrl = \gpweb\inc\woocommerce\BookingController::getInstance();
+      $addToCartAction = $bookingCtrl->getAddToCartAction();
+      $buyNowAction = $bookingCtrl->getBuyNowAction();
+      $this->enqueueScript('gpw-product-single-page', time());
+      $this->enqueueStyle('gpw-product-single-page', time());
+      wp_localize_script( 'gpw-product-single-page', 'ajaxObj', [
+        'url' => admin_url( 'admin-ajax.php' ),
+        'add_to_cart_action' => $addToCartAction,
+        'buy_now_action' => $buyNowAction,
+        'nonce' => wp_create_nonce( "{$addToCartAction}_nonce" ),
+      ]);
     }
   }
   public function setTypeForModuleScripts() {

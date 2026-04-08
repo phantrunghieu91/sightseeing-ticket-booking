@@ -2,6 +2,9 @@
 /**
  * @author Hieu "Jin" Phan Trung
  * * Template for accordion element
+ * @args:
+ * - items (array) - Array of accordion items, each item should have 'title' and 'content' keys
+ * - has_icon (bool) - Whether to show the expand/collapse icon
  */
 $items = $args['items'] ?? [];
 $hasIcon = $args['has_icon'] ?? false;
