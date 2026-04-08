@@ -16,12 +16,11 @@
     }
 
     &:has([aria-hidden="false"]) {
-      --_accordion-btn-border-color: var(--primary-color-500);
-      --_accordion-btn-bg-clr: var(--gray-color-50);
-      
       grid-template-rows: min-content 1fr;
-
+      
       #{$class}__button {
+        border-top-color: var(--_accordion-btn-active-border-clr, var(--primary-color-500));
+        background-color: var( --_accordion-btn-active-bg-clr, var(--gray-color-50));
         font-weight: 700;
       }
     }
@@ -46,6 +45,10 @@
 
     &:hover {
       color: var(--_accordion-btn-hover-text-clr, var(--gray-color-500));
+    }
+
+    &:focus {
+      outline: none;
     }
   }
 
