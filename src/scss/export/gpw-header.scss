@@ -1,0 +1,112 @@
+@use '../abstracts/' as *;
+.header {
+  &.header {
+    container: header / inline-size;
+    box-shadow: rgba(11, 11, 11, 0.1) 0px 2px 24px;
+  }
+  .nav > li {
+    margin-inline: 0;
+  }
+  .nav > li > a:not(.header__contact) {
+    padding: 0.75rem 0.875rem;
+    line-height: 1;
+
+    &:hover {
+      background-color: rgb(240 241 242 / 1);
+      border-radius: 0.5rem;
+    }
+  }
+
+  &-main {
+    .nav > li > a, .nav-small.nav > li.html {
+      font-size: 1rem;
+      color: var(--gray-color-950);
+    }
+
+    .header-nav.nav-left {
+      justify-content: flex-end;
+    }
+  }
+
+  &-bottom {
+    padding-block: 0 .5rem;
+
+    .nav > li > a {
+      font-size: 1rem;
+      color: var(--gray-color-700);
+    }
+  }
+
+  &__contact {
+    &-icon {
+      grid-area: icon;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      color: #fff;
+      padding: .5rem;
+      border-radius: 50%;
+      background: linear-gradient(to right, var(--primary-color-500), var(--secondary-color-500));
+    }
+
+    &-text, &-phone {
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    &-text {
+      grid-area: text;
+      font-weight: 400;
+    }
+
+    &-phone {
+      grid-area: phone;
+      color: var(--primary-color-500);
+    }
+  }
+
+  @include container-query( header, md ) {
+    .header-main .mobile-nav li.custom.html {
+      display: block;
+    }
+    .header-main .mobile-nav li.custom.html .gtranslate_wrapper {
+      display: flex;
+    }
+  }
+}
+
+.header-main .nav > .html > .header__contact,
+.nav-vertical > li > .header__contact {
+  margin-left: .625rem;
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  grid-template-areas: 'icon text' 'icon phone';
+  gap: .3125rem .5rem;
+}
+
+.offcanvas {
+  .nav-vertical > .menu-item {
+    border: none;
+
+    & > a {
+      padding-block: .5rem;
+      font-size: .9375rem;
+      font-weight: 400;
+      color: var(--gray-darker);
+      text-transform: none;
+    }
+  }
+
+  &:not(.off-canvas-center) {
+    .nav-vertical > li > .header__contact {
+      padding: 0;
+      margin: 0;
+      text-transform: none;
+
+      .header__contact-phone, .header__contact-text {
+        font-size: 1rem;
+      }
+    }
+  }
+}

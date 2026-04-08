@@ -31,7 +31,9 @@ class Register extends BaseController {
    * Sets the shortcodes.
    */
   protected function setShortcodes() {
-    $this->shortcodes = [];
+    $this->shortcodes = [
+      new \gpweb\shortcodes\HeaderContactButton('header_contact_btn'),
+    ];
   }
   
   /**
@@ -44,6 +46,7 @@ class Register extends BaseController {
     $this->enqueueStyle('theme-init', time());
     $this->enqueueStyle('google-symbols', null, 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
+    $this->enqueueStyle('gpw-header', time());
     $this->enqueueStyle('gpw-footer', time());
 
     // * Enqueue swiper for page that needs it
