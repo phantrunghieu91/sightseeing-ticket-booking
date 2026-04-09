@@ -417,10 +417,12 @@ document.addEventListener('DOMContentLoaded', function () {
     bindEvents() {
       this.toggleBtn.addEventListener('click', this.handleTogglePopover.bind(this, 'show'));
       this.closePopoverBtn.addEventListener('click', this.handleTogglePopover.bind(this, 'hide'));
+      this.popoverEl.addEventListener('toggle', (event) => {
+        document.documentElement.classList.toggle('no-scroll', event.newState === 'open');
+      });
     },
     handleTogglePopover( action = 'show' ) {
       this.popoverEl.togglePopover( action === 'show' );
-      document.documentElement.classList.toggle('no-scroll', action === 'show');
     }
   }.init();
   new GPWAccordion();

@@ -47,6 +47,8 @@
 
 }
 html {
+  scrollbar-gutter: stable;
+  
   &.no-scroll {
     overflow: hidden;
   }
