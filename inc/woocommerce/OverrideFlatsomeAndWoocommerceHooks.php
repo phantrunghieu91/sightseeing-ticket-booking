@@ -24,7 +24,7 @@ class OverrideFlatsomeAndWoocommerceHooks
     if( $price === '' ) {
       return __('Liên hệ', 'gpw');
     }
-    return $price;
+    return sprintf('<span class="price-prefix">%s</span> %s', __('Từ', 'gpw'), $price );
   }
   public function removeFlatsomeHeaderInShopAndProductCategoryPage()
   {
