@@ -18,6 +18,7 @@ class ThemeInit {
       controller\CompanyInfo::class,
       woocommerce\BookingController::class,
       woocommerce\CartAndCheckoutController::class,
+      woocommerce\OverrideFlatsomeAndWoocommerceHooks::class,
     ];
   }
 
