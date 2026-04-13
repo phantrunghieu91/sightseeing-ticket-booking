@@ -63,8 +63,8 @@
   .hotel-info__accommodation-type {
     gap: .25rem;
     padding: .25rem;
-    background-color: var(--secondary-light);
-    color: var(--secondary-darker);
+    background-color: var(--secondary-color-300);
+    color: var(--secondary-color-700);
     border-radius: .25rem;
   }
 
@@ -78,7 +78,7 @@
     gap: .25rem;
     font-size: 1rem;
     font-weight: 600;
-    color: var(--gray-darkest);
+    color: var(--gray-color-950);
     margin-bottom: var(--_space-between-els);
   }
 
@@ -93,7 +93,7 @@
       line-height: 1;
       padding: .25rem;
       margin: 0;
-      background-color: var(--gray-lightest);
+      background-color: var(--gray-color-50);
     }
   }
 
