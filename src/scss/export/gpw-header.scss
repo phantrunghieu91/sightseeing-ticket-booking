@@ -6,15 +6,20 @@
   }
   .nav > li {
     margin-inline: 0;
-  }
-  .nav > li > a:not(.header__contact) {
-    padding: 0.75rem 0.875rem;
-    line-height: 1;
 
-    &:hover {
-      background-color: rgb(240 241 242 / 1);
+    &:has(:not(.header__contact)) {
+      padding: 0.75rem 0.875rem;
       border-radius: 0.5rem;
+      
+      &:hover {
+        background-color: rgb(240 241 242 / 1);
+      }
     }
+  }
+
+  .nav > li > a:not(.header__contact) {
+    line-height: 1;
+    padding-block: 0;
   }
 
   &-main {
@@ -34,6 +39,35 @@
     .nav > li > a {
       font-size: 1rem;
       color: var(--gray-color-700);
+    }
+
+    .header-bottom-nav.nav > li {
+      display: flex;
+      align-items: center;
+
+      &:before {
+        font-family: 'Material Symbols Outlined';
+        font-size: 1.25rem;
+        line-height: 1;
+        margin-right: .3125rem;
+        color: currentColor;
+      }
+
+      &:first-child:before {
+        content: '\ea68';
+      }
+
+      &:nth-child(2):before {
+        content: '\e53a';
+      }
+
+      &:nth-child(3):before {
+        content: '\eb3c';
+      }
+
+      &:nth-child(4):before {
+        content: '\eb28';
+      }
     }
   }
 
