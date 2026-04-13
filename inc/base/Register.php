@@ -73,6 +73,11 @@ class Register extends BaseController {
         'nonce' => wp_create_nonce( "{$addToCartAction}_nonce" ),
       ]);
     }
+
+    if( is_post_type_archive( 'product' ) || is_tax( 'product_cat') ) {
+      $this->enqueueScript('gpw-product-category-page', time());
+      $this->enqueueStyle( 'gpw-product-category-page', time() );
+    }
   }
   public function setTypeForModuleScripts() {
     if( empty( $this->module_scripts ) ) {
