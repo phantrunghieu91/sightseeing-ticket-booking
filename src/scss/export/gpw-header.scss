@@ -7,7 +7,7 @@
   .nav > li {
     margin-inline: 0;
 
-    &:has(:not(.header__contact)) {
+    &:not(:has(.header__contact)) {
       padding: 0.75rem 0.875rem;
       border-radius: 0.5rem;
       
@@ -85,7 +85,7 @@
     }
 
     &-text, &-phone {
-      font-size: 1.25rem;
+      font-size: 1rem;
       line-height: 1;
     }
 
