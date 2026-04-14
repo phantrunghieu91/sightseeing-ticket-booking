@@ -6,7 +6,6 @@
 global $product;
 $address = get_field('address', get_the_ID());
 $displayData = get_field('display_data', get_the_ID());
-$reviewCount = $product->get_review_count();
 ?>
 <header class="product-header">
   <div class="section__inner">
@@ -19,14 +18,21 @@ $reviewCount = $product->get_review_count();
       </div>
     <?php endif; ?>
     <ul class="product-header__meta-list">
-      <?php if( isset($displayData['review_point']) && !empty($displayData['review_point']) ) : ?>
-        <li class="product-header__meta-item product-header__meta-item--review-point">
-          <span><?= esc_html( $displayData['review_point'] ) ?>/10</span>
+      <?php if( isset($displayData['review_stars']) && !empty($displayData['review_stars']) ) : ?>
+        <li class="product-header__meta-item product-header__meta-item--review-stars">
+          <strong><?= esc_html( $displayData['review_stars'] ) ?></strong>
+          <span>/</span>
+          <span>5</span>
         </li>
       <?php endif; ?>
-      <?php if( $reviewCount > 0 ) : ?>
+      <?php if( isset($displayData['review_count']) && !empty($displayData['review_count']) ) : ?>
         <li class="product-header__meta-item product-header__meta-item--review-count">
-          <span><?= esc_html( $reviewCount ) ?> <?php _e('reviews', 'gpw') ?></span>
+          <span><?= esc_html( $displayData['review_count'] ) ?> <?php _e('đánh giá', 'gpw') ?></span>
+        </li>
+      <?php endif; ?>
+      <?php if( isset($displayData['ordered_number']) && !empty($displayData['ordered_number']) ) : ?>
+        <li class="product-header__meta-item product-header__meta-item--ordered-number">
+          <span><?= esc_html( $displayData['ordered_number'] ) ?> <?php _e('đã đặt', 'gpw') ?></span>
         </li>
       <?php endif; ?>
     </ul>
