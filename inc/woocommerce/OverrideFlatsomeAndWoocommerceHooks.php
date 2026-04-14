@@ -19,7 +19,8 @@ class OverrideFlatsomeAndWoocommerceHooks
     add_action('wp', [$this, 'removeFlatsomeHeaderInShopAndProductCategoryPage']);
     add_filter( 'woocommerce_get_price_html', [ $this, 'changePriceDisplay' ], 10, 2 );
     add_action( 'woocommerce_after_shop_loop_item_title', [ $this, 'displaySaleBadge' ], 15 );
-    add_action( 'woocommerce_shop_loop_item_title', [ $this, 'displayTagsInProductLoop' ], 40, 1 );
+    add_action( 'woocommerce_shop_loop_item_title', [ $this, 'displayTagsInProductLoop' ], 30, 1 );
+    add_action( 'woocommerce_shop_loop_item_title', [ $this, 'displayReviewStarsAndOrderedCount' ], 40, 1 );
   }
   public function changePriceDisplay( $price, $product ) {
     if( $price === '' ) {
@@ -59,5 +60,23 @@ class OverrideFlatsomeAndWoocommerceHooks
         __('Giảm', 'gpw'), 
         $percentage
       );
+  }
+  public function displayReviewStarsAndOrderedCount( $product ) {
+    $displayData = get_field( 'display_data', $product->get_id() );
+    echo '<ul class="gpw-prd-meta">';
+    foreach( $displayData as $key => $value ) {
+      if( $key === 'review_point' || empty( $value ) ) {
+        continue;
+      }
+      echo sprintf('<li class="gpw-prd-meta__item gpw-prd-meta__item--%s">%s</li>',
+        esc_attr( $key ),
+        match( $key ) {
+          'review_stars' => "<span class=\"material-symbols-outlined\">star</span> {$value}",
+          'review_count' => "({$value})",
+          'ordered_number' => __("{$value} dã được đặt", 'gpw'),
+        }
+      );
+    }
+    echo '</ul>';
   }
 }
