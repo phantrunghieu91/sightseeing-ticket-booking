@@ -18,6 +18,7 @@ class OverrideFlatsomeAndWoocommerceHooks
   {
     add_action('wp', [$this, 'removeFlatsomeHeaderInShopAndProductCategoryPage']);
     add_filter( 'woocommerce_get_price_html', [ $this, 'changePriceDisplay' ], 10, 2 );
+    add_action( 'woocommerce_after_shop_loop_item_title', [ $this, 'displaySaleBadge' ], 15 );
     add_action( 'woocommerce_shop_loop_item_title', [ $this, 'displayTagsInProductLoop' ], 40, 1 );
   }
   public function changePriceDisplay( $price, $product ) {
@@ -47,5 +48,16 @@ class OverrideFlatsomeAndWoocommerceHooks
       echo sprintf('<li class="product-tags__more">%d+</li>', count($tags) - 2);
     }
     echo '</ul>';
+  }
+  public function displaySaleBadge() { 
+    global $product;
+    if( !$product->is_on_sale() ) {
+      return;
+    }
+    $percentage = round( ( ( $product->get_regular_price() - $product->get_sale_price() ) / $product->get_regular_price() ) * 100 );
+    echo sprintf('<div class="gpw-sale-badge">
+      <span class="gpw-sale-badge__label">Sale</span>
+      <span class="gpw-sale-badge__percent">%d%%</span>
+    </div>', $percentage);
   }
 }
