@@ -32,4 +32,42 @@ document.addEventListener('DOMContentLoaded', function () {
       this.descPopoverEl.togglePopover( state === 'open' );
     }
   }.init();
+
+  // Product categories carousel controller
+  const productCategoriesCarouselController = {
+    init() {
+      try {
+        this.cacheElements();
+        this.initSwiper();
+      } catch (error) {
+        console.warn('ERROR IN PRODUCT CATEGORIES CAROUSEL CONTROLLER: ', error);
+      }
+    },
+    cacheElements() {
+      this.swiperEls = document.querySelectorAll('.gpw-prd-cat__carousel .swiper');
+      if( !this.swiperEls.length ) {
+        throw new Error('No carousel elements found');
+      }
+    },
+    initSwiper() {
+      this.swiperEls.forEach( swiperEl => {
+        new Swiper( swiperEl, {
+          slidesPerView: 1,
+          spaceBetween: 20,
+          navigation: {
+            nextEl: swiperEl.querySelector('.gpw-nav-btn__next'),
+            prevEl: swiperEl.querySelector('.gpw-nav-btn__prev'),
+          },
+          breakpoints: {
+            550: {
+              slidesPerView: 2,
+            },
+            850: {
+              slidesPerView: 4,
+            }
+          }
+        } );
+      } );
+    }
+  }.init();
 });
