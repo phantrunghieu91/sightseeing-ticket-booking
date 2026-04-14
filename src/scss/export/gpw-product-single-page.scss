@@ -137,7 +137,7 @@ body.admin-bar {
   &__nav {
     --admin-bar-height: 0px;
     position: fixed;
-    top: calc(var(--header-height, 4.375rem) + var(--admin-bar-height, 0px));
+    top: calc(var(--header-height, 7.5625rem) + var(--admin-bar-height, 0px));
     left: 0;
     z-index: 999;
     width: 100%;
