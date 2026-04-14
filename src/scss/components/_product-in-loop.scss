@@ -4,9 +4,9 @@
   padding-block: 0 .625rem;
 }
 .swiper-slide .product {
-  box-shadow: 0 .25rem .625rem rgb(0 0 0 / 0.15);
-  border-radius: .625rem;
+  border-radius: 1rem;
   overflow: hidden;
+  border: .0625rem solid var(--gray-color-200);
 
   .box-text {
     padding-inline: .625rem;
@@ -87,13 +87,40 @@
     list-style: none;
     display: flex;
     gap: .3125rem;
-    font-size: .875rem;
+    font-size: .75rem;
 
     li {
       line-height: 1;
       padding: .25rem;
       margin: 0;
       background-color: var(--gray-color-100);
+      color: var(--gray-color-500);
+    }
+  }
+
+  .gpw-sale-badge {
+    margin-top: .625rem;
+    width: fit-content;
+    overflow: hidden;
+    border-radius: .125rem;
+    font-size: .75rem;
+    line-height: 1.25rem;
+    background-color: var(--danger-color-50);
+    color: var(--danger-color-500);
+    border: .0625rem solid currentColor;
+
+    & > span {
+      display: inline-block;
+    }
+
+    &__label {
+      padding-inline: .25rem;
+      background-color: #fff;
+    }
+
+    &__percent {
+      padding-inline: 1.5rem .25rem;
+      background: radial-gradient(circle at .9em,#fff .22em,#0000 .22em),linear-gradient(125deg,#fff .68em,#0000 .68em),linear-gradient(55deg,#fff .68em,#0000 .68em);
     }
   }
 

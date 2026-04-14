@@ -55,9 +55,9 @@ class OverrideFlatsomeAndWoocommerceHooks
       return;
     }
     $percentage = round( ( ( $product->get_regular_price() - $product->get_sale_price() ) / $product->get_regular_price() ) * 100 );
-    echo sprintf('<div class="gpw-sale-badge">
-      <span class="gpw-sale-badge__label">Sale</span>
-      <span class="gpw-sale-badge__percent">%d%%</span>
-    </div>', $percentage);
+    echo sprintf('<div class="gpw-sale-badge"><span class="gpw-sale-badge__label">Sale</span><span class="gpw-sale-badge__percent">%s %d%%</span></div>',
+        __('Giảm', 'gpw'), 
+        $percentage
+      );
   }
 }
