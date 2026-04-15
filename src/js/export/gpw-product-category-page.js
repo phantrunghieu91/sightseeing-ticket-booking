@@ -82,14 +82,13 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
           }
           this.swipers?.forEach( swiper => {
-            swiper.detachEvents();
-            swiper.destroy(true, true);
-            swiper = null;
-            const slides = swiper.querySelectorAll('.swiper-slide');
-            slides.forEach( slide => {
+            swiper.slides.forEach( slide => {
               slide.removeAttribute('style');
               slide.classList.remove('swiper-slide-active', 'swiper-slide-next', 'swiper-slide-prev');
             });
+            swiper.detachEvents();
+            swiper.destroy(true, true);
+            swiper = null;
           });
           this.swipers = [];
           swiperInitialized = false;
@@ -99,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
             swiperInitialized = true;
           }
         }
-        console.log(this.swipers);
       } );
       observer.observe( document.body );
     }
