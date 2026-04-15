@@ -63,12 +63,12 @@ class OverrideFlatsomeAndWoocommerceHooks
   }
   public function displayReviewStarsAndOrderedCount( $product ) {
     $displayData = get_field( 'display_data', $product->get_id() );
-    echo '<ul class="gpw-prd-meta">';
+    echo '<p class="gpw-prd-meta">';
     foreach( $displayData as $key => $value ) {
       if( $key === 'review_point' || empty( $value ) ) {
         continue;
       }
-      echo sprintf('<li class="gpw-prd-meta__item gpw-prd-meta__item--%s">%s</li>',
+      echo sprintf('<span class="gpw-prd-meta__item gpw-prd-meta__item--%s">%s</span>',
         esc_attr( $key ),
         match( $key ) {
           'review_stars' => "<span class=\"material-symbols-outlined\">star</span> {$value}",
@@ -77,6 +77,6 @@ class OverrideFlatsomeAndWoocommerceHooks
         }
       );
     }
-    echo '</ul>';
+    echo '</p>';
   }
 }

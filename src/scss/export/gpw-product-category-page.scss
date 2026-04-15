@@ -186,6 +186,12 @@
     }  
   }
 
+  @include container-query(content, lg ) {
+    .gpw-nav-btn {
+      display: none;
+    }
+  }
+
   @include container-query(content, lg, gt) {
     .swiper-wrapper {
       display: flex;
