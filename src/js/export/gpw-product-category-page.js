@@ -37,37 +37,56 @@ document.addEventListener('DOMContentLoaded', function () {
   const productCategoriesCarouselController = {
     init() {
       try {
+        this.buttonClasses = ['gpw-button', 'gpw-button__primary', 'gpw-button--full-width'];
         this.cacheElements();
-        this.initSwiper();
+        this.initObserver();
       } catch (error) {
         console.warn('ERROR IN PRODUCT CATEGORIES CAROUSEL CONTROLLER: ', error);
       }
     },
     cacheElements() {
-      this.swiperEls = document.querySelectorAll('.gpw-prd-cat__carousel .swiper');
-      if( !this.swiperEls.length ) {
+      this.containerEls = [...document.querySelectorAll('.gpw-prd-cat')];
+      this.viewAllBtns = [...this.containerEls.map(containerEl => containerEl.querySelector('.gpw-prd-cat__view-all'))];
+      if( !this.containerEls.length ) {
         throw new Error('No carousel elements found');
       }
     },
     initSwiper() {
-      this.swiperEls.forEach( swiperEl => {
-        new Swiper( swiperEl, {
-          slidesPerView: 1,
+      this.swipers = this.containerEls.map( containerEl => {
+        return new Swiper( containerEl.querySelector('.swiper'), {
+          slidesPerView: 4,
           spaceBetween: 20,
           navigation: {
-            nextEl: swiperEl.querySelector('.gpw-nav-btn__next'),
-            prevEl: swiperEl.querySelector('.gpw-nav-btn__prev'),
+            nextEl: containerEl.querySelector('.gpw-nav-btn__next'),
+            prevEl: containerEl.querySelector('.gpw-nav-btn__prev'),
           },
-          breakpoints: {
-            550: {
-              slidesPerView: 2,
-            },
-            850: {
-              slidesPerView: 4,
-            }
-          }
         } );
       } );
+    },
+    changingButtonStyle( screen = 'desktop' ) {
+      this.viewAllBtns.forEach( btn => {
+        if( screen === 'desktop' ) {
+          btn.classList.remove( ...this.buttonClasses );
+        } else {
+          btn.classList.add( ...this.buttonClasses );
+        }
+      } );
+    },
+    initObserver() {
+      const observer = new ResizeObserver( entries => {
+        const entry = entries[0];
+        if ( entry.contentRect.width > 1200 ) {
+          this.initSwiper();
+          this.changingButtonStyle('desktop');
+        } else {
+          if( this.swipers ) {
+            this.swipers.forEach( swiper => swiper.destroy() );
+            this.swipers = [];
+          }
+          this.changingButtonStyle('mobile');
+        }
+      } );
+      observer.observe( document.body );
     }
   }.init();
 });
