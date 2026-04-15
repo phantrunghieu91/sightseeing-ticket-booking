@@ -73,18 +73,33 @@ document.addEventListener('DOMContentLoaded', function () {
       } );
     },
     initObserver() {
+      let swiperInitialized = false;
       const observer = new ResizeObserver( entries => {
         const entry = entries[0];
-        if ( entry.contentRect.width > 1200 ) {
-          this.initSwiper();
-          this.changingButtonStyle('desktop');
-        } else {
-          if( this.swipers ) {
-            this.swipers.forEach( swiper => swiper.destroy() );
-            this.swipers = [];
+        this.changingButtonStyle( entry.contentRect.width > 1200 ? 'desktop' : 'mobile' );
+        if( entry.contentRect.width < 1200 ) {
+          if( !swiperInitialized ) {
+            return;
           }
-          this.changingButtonStyle('mobile');
+          this.swipers?.forEach( swiper => {
+            swiper.detachEvents();
+            swiper.destroy(true, true);
+            swiper = null;
+            const slides = swiper.querySelectorAll('.swiper-slide');
+            slides.forEach( slide => {
+              slide.removeAttribute('style');
+              slide.classList.remove('swiper-slide-active', 'swiper-slide-next', 'swiper-slide-prev');
+            });
+          });
+          this.swipers = [];
+          swiperInitialized = false;
+        } else {
+          if( !swiperInitialized ) {
+            this.initSwiper();
+            swiperInitialized = true;
+          }
         }
+        console.log(this.swipers);
       } );
       observer.observe( document.body );
     }

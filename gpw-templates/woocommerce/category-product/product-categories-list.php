@@ -46,11 +46,11 @@ foreach( $chosenCategories as $chooseCatData ) :
   <div class="section__inner">
     <header class="gpw-prd-cat__header">
       <h2 class="section__title"><?= esc_html( $title ) ?></h2>
-      <a href="<?= esc_url( $catLink ) ?>" class="gpw-prd-cat__view-all"><?= sprintf( __('Xem tất cả (%d)', 'gpw'), $productCount ) ?></a>
     </header>
     <main class="gpw-prd-cat__carousel">
       <?php get_template_part( 'gpw-templates/global/swiper-template', null, [ 'slide_items' => $slideItems, 'has_nav' => 'true' ]) ?>
     </main>
+    <a href="<?= esc_url( $catLink ) ?>" class="gpw-prd-cat__view-all"><?= sprintf( __('Xem tất cả (%d) sản phẩm', 'gpw'), $productCount ) ?></a>
   </div>
 </section>
 <?php endforeach;

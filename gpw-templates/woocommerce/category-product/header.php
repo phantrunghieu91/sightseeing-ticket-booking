@@ -27,7 +27,7 @@ $shortDesc = wp_trim_words( $description, 100, '...' );
     <h1 class="product-cat-header__title"><?= esc_html( $title ) ?></h1>
     <?php if( $description ) : ?>
       <div class="product-cat-header__description">
-        <div class="product-cat-header__description-content"><?= wp_kses_post( $shortDesc ) ?></div>
+        <div class="product-cat-header__description-content line-clamp"><?= wp_kses_post( $shortDesc ) ?></div>
         <a href="javascript:void(0);" class="product-cat-header__description-toggle" popovertarget="product-cat-description"><?= __('Xem thêm', 'gpw') ?></a>
       </div>
       <div popover="auto" id="product-cat-description" class="product-cat-popover">

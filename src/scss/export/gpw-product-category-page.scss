@@ -23,7 +23,7 @@
   &__bg {
     z-index: 1;
     width: 100%;
-    aspect-ratio: 50 / 9;
+    height: 13.5rem;
 
     img {
       display: block;
@@ -53,6 +53,10 @@
   &__title,
   &__description {
     color: var(--gray-color-50);
+
+    &-content {
+      --_line-clamp: 3;
+    }
   }
 
   &__description-toggle {
@@ -121,6 +125,12 @@
       background-color: hsl(from var(--gray-color-950) h s l / 0.75);
     }
   }
+
+  @include container-query( content, md, gt ) {
+    &__bg {
+      height: 15.875rem;
+    }
+  }
 }
 
 @starting-style {
@@ -133,13 +143,16 @@
 /* ===================================== */
 .gpw-prd-cat {
   padding-block: 3rem;
+  
+  .section__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'header' 'carousel' 'view-all';
+  }
 
   &__header {
+    grid-area: header;  
     margin-bottom: 1.25rem;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    align-items: flex-end;
 
     .section__title {
       width: fit-content;
@@ -148,10 +161,12 @@
   }
 
   &__view-all {
+    grid-area: view-all;
     white-space: nowrap;
   }
 
   &__carousel {
+    grid-area: carousel;
     padding-inline: 0.625rem;
   }
 
@@ -159,22 +174,34 @@
     padding: 0;
   }
 
-  .swiper-slide {
-    --_slides-per-view: 1;
-    --_space-between: 1.25rem;
-    width: calc((100% - (var(--_slides-per-view) - 1) * var(--_space-between)) / var(--_slides-per-view));
-    margin-right: var(--_space-between);
+  .swiper-wrapper {
+    display: grid;
+    grid-template-columns: repeat(var(--_prd-per-row, 2), minmax(0, 1fr));
+    gap: .625rem;
   }
 
-  @include container-query(content, sm, gt) {
-    .swiper-slide {
-      --_slides-per-view: 2;
+  @include container-query(content, 47.5rem, gt) {
+    .swiper-wrapper {
+      --_prd-per-row: 3;
+    }  
+  }
+
+  @include container-query(content, lg, gt) {
+    .swiper-wrapper {
+      display: flex;
+      gap: 0;
     }
-  }
 
-  @include container-query(content, md, gt) {
     .swiper-slide {
       --_slides-per-view: 4;
+      --_space-between: 1.25rem;
+      width: calc((100% - (var(--_slides-per-view) - 1) * var(--_space-between)) / var(--_slides-per-view));
+      margin-right: var(--_space-between);
+    }
+    &__view-all {
+      grid-area: header;
+      justify-self: end;
+      align-self: center;
     }
   }
 }
