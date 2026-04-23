@@ -4,6 +4,12 @@
 body.admin-bar {
   --admin-bar-height: 2rem;
 }
+
+@media screen and (max-width: 849px) {
+  body.admin-bar {
+    --admin-bar-height: 0rem;
+  }
+}
 /* ===================================== */
 /* =                Header             = */
 /* ===================================== */
@@ -142,6 +148,7 @@ body.admin-bar {
 .product-details {
   --_border-radius: 1rem;
   --_border-color: var(--gray-color-200);
+  --_header-height: 4.375rem;
 
   padding-block: 0 1rem;
 
@@ -152,9 +159,8 @@ body.admin-bar {
   }
 
   &__nav {
-    --admin-bar-height: 0px;
     position: fixed;
-    top: calc(var(--header-height, 4.375rem) + var(--admin-bar-height, 0px));
+    top: calc(var(--_header-height, 4.375rem) + var(--admin-bar-height, 0px));
     left: 0;
     z-index: 999;
     width: 100%;
@@ -399,6 +405,10 @@ body.admin-bar {
         border-bottom: 0.0625rem solid var(--_border-color);
       }
 
+      &__product-title {
+        color: var(--primary-color-500);
+      }
+
       &__close-btn {
         margin: 0;
         padding: 0;
@@ -528,7 +538,7 @@ body.admin-bar {
 
   .product-sidebar {
     position: sticky;
-    top: calc(var(--header-height, 4.375rem) + var(--admin-bar-height, 0px) + var(--_nav-height, 3.125rem) + var(--spacing-lg));
+    top: calc(var(--_header-height, 4.375rem) + var(--admin-bar-height, 0px) + var(--_nav-height, 3.125rem) + var(--spacing-lg));
     background-color: #fff;
     border: 0.0625rem solid var(--_border-color);
     padding: var(--spacing-lg);
@@ -559,9 +569,8 @@ body.admin-bar {
   }
 
   @include container-query(content, md, gt) {
-    &__nav {
-      --admin-bar-height: 2rem;
-      --header-height: 7.5625rem;
+    & {
+      --_header-height: 7.8125rem;
     }
 
     .section__inner {
